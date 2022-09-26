@@ -100,6 +100,7 @@ export default function Registration() {
           <Form.Item
             label="Tạo mật khẩu"
             name="matKhau"
+            hasFeedback
             style={{ width: "300px" }}
             rules={[{ required: true, message: "Hãy nhập mật khẩu" }]}
           >
@@ -109,8 +110,25 @@ export default function Registration() {
           <Form.Item
             label="Xác nhận mật khẩu"
             name="xacNhanMatKhau"
+            dependencies={["matKhau"]}
+            hasFeedback
             style={{ width: "300px" }}
-            rules={[{ required: true, message: "Hãy xác nhận mật khẩu" }]}
+            rules={[
+              {
+                required: true,
+                message: "Hãy xác nhận mật khẩu",
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("matKhau") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error("2 mật khẩu không giống nhau!")
+                  );
+                },
+              }),
+            ]}
           >
             <Input.Password />
           </Form.Item>

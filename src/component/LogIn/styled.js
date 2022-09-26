@@ -1,39 +1,5 @@
 import styled from "styled-components";
 export const WrapperStyled = styled.div`
-  nav {
-    display: flex;
-    background: lightblue;
-    color: white;
-  }
-
-  .nav-logo {
-    display: block;
-    width: 20%;
-    text-align: center;
-    margin-top: 10px;
-  }
-
-  .nav-contain {
-    width: 80%;
-    display: flex;
-  }
-
-  .nav-content {
-    text-align: center;
-    margin: auto;
-  }
-
-  .nav-links {
-    display: block;
-    text-decoration-line: none;
-  }
-
-  .search-box {
-    padding: 10px 10px 10px 10px;
-    float: right;
-    width: 300px;
-  }
-
   .title {
     padding-top: 20px;
     text-align: center;
