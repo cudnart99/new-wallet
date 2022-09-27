@@ -1,95 +1,47 @@
-import {
-  DesktopOutlined,
-  FileOutlined,
-  PieChartOutlined,
-  TeamOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import { Breadcrumb, Layout, Menu } from "antd";
-import React, { useState } from "react";
-import { WrapperStyled } from "./styled";
-const { Header, Content, Footer, Sider } = Layout;
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-function getItem(label, key, icon, children) {
-  return {
-    key,
-    icon,
-    children,
-    label,
+export default function Content() {
+  const [routes, setRoutes] = useState([]);
+  useEffect(() => {}, [routes]);
+  const handleCreate = () => {
+    var newAcc = {};
+    newAcc.path = `/account/${routes.length}`;
+    newAcc.exact = true;
+    newAcc.main = () => <h2>Content {routes.length}</h2>;
+    setRoutes((routes) => [...routes, newAcc]);
+    console.log(routes, "helo123");
   };
-}
-
-const items = [
-  getItem("Option 1", "1", <PieChartOutlined />),
-  getItem("Option 2", "2", <DesktopOutlined />),
-  getItem("User", "sub1", <UserOutlined />),
-  getItem("Team", "sub2", <TeamOutlined />),
-  getItem("Files", "9", <FileOutlined />),
-];
-
-const App = () => {
-  const [collapsed, setCollapsed] = useState(false);
   return (
-    <WrapperStyled>
-      <Layout
-        style={{
-          minHeight: "100vh",
-        }}
-      >
-        <Sider
-          collapsible
-          collapsed={collapsed}
-          onCollapse={(value) => setCollapsed(value)}
+    <Router>
+      <div style={{ display: "flex" }}>
+        <div
+          style={{
+            padding: "10px",
+            width: "20%",
+            background: "red",
+          }}
         >
-          <div className="logo" />
-          <Menu
-            theme="dark"
-            defaultSelectedKeys={["1"]}
-            mode="inline"
-            items={items}
-          />
-        </Sider>
-        <Layout className="site-layout">
-          <Header
-            className="site-layout-background"
-            style={{
-              padding: 0,
-            }}
-          />
-          <Content
-            style={{
-              margin: "0 16px",
-            }}
-          >
-            <Breadcrumb
-              style={{
-                margin: "16px 0",
-              }}
-            >
-              <Breadcrumb.Item>User</Breadcrumb.Item>
-              <Breadcrumb.Item>Bill</Breadcrumb.Item>
-            </Breadcrumb>
-            <div
-              className="site-layout-background"
-              style={{
-                padding: 24,
-                minHeight: 360,
-              }}
-            >
-              Bill is a cat.
-            </div>
-          </Content>
-          <Footer
-            style={{
-              textAlign: "center",
-            }}
-          >
-            Ant Design ©2018 Created by Ant UED
-          </Footer>
-        </Layout>
-      </Layout>
-    </WrapperStyled>
-  );
-};
+          <button onClick={() => handleCreate()}>Create new account</button>
+          <ul style={{ listStyleType: "none", padding: 0 }}>
+            {routes.map((item, index) => {
+              return (
+                <li>
+                  <Link to={`/account/${index}`}>Account {index}</Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
 
-export default App;
+        <div style={{ flex: 1, padding: "10px" }}>
+          <Switch>
+            {routes.map((route, index) => (
+              <Route key={index} path={route.path} children={<route.main />} />
+            ))}
+          </Switch>
+        </div>
+      </div>
+    </Router>
+  );
+}

@@ -12,7 +12,6 @@ export default function Home() {
         <Route path="/account" exact component={Content} />
         <Route path="/registration" exact component={Registration} />
       </Router>
-      {/* helo123 */}
     </>
   );
 }
