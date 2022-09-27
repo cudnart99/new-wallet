@@ -20,8 +20,9 @@ export default function LogIn() {
   //   }, []);
 
   const onFinish = (values) => {
+    window.location.href = "http://localhost:3000/account";
     // console.log("Success:", values);
-    let check = 0;
+    // let check = 0;
     // for (let i = 0; i < Object.keys(state).length; i++) {
     //   if (
     //     state[i].tenDangNhap == values.tenDangNhap &&
@@ -40,11 +41,11 @@ export default function LogIn() {
     //     }
     //   }
     // }
-    if (check === 0) {
-      Modal.error({
-        title: "Sai tài khoản hoặc mật khẩu",
-      });
-    }
+    // if (check === 0) {
+    //   Modal.error({
+    //     title: "Sai tài khoản hoặc mật khẩu",
+    //   });
+    // }
   };
 
   const onFinishFailed = (errorInfo) => {
