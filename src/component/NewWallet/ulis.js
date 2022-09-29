@@ -1,5 +1,5 @@
 const { ethers } = require("ethers");
-
+const { Modal } = require("antd");
 const rpc = "https://data-seed-prebsc-1-s1.binance.org:8545/";
 const bscProvider = new ethers.providers.JsonRpcProvider(rpc, {
   name: "bnbt",
@@ -25,8 +25,15 @@ async function transfer(privateKey, sender, receiver, amount) {
   try {
     let res = await walletSigner.sendTransaction(tx);
     console.log("res", res);
+    Modal.success({
+      title: "Transfer thành công",
+      // content: (<div>{res123}</div>)
+    });
   } catch (error) {
     console.log("error", error);
+    Modal.error({
+      title: "Transfer thất bại",
+    });
   }
 }
 

@@ -75,15 +75,12 @@ export default function NewWallet() {
     setHDNode(newHDNode);
     const derivedNode = newHDNode.derivePath(`m/44'/60'/0'/0/0`);
     let balanceOf = await getBalance(derivedNode.privateKey);
-    setData((data) => [
-      ...data,
-      {
-        address: derivedNode.address,
-        // public: "1231231312312313123123123123213213123123213123",
-        private: derivedNode.privateKey,
-        balance: balanceOf,
-      },
-    ]);
+    setData([{
+      address: derivedNode.address,
+      // public: "1231231312312313123123123123213213123123213123",
+      private: derivedNode.privateKey,
+      balance: balanceOf,
+    }]);
     setVisibleAccount(true);
   };
 
