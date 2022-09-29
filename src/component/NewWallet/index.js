@@ -65,34 +65,36 @@ export default function NewWallet() {
 
     useEffect(() => {
         var infoData = JSON.parse(localStorage.getItem("data"));
-        infoData.listAcc.map(async (value) => {
-            let infoToken = await JSON.parse(localStorage.getItem(value));
-            let dataItem = [];
-            infoToken.tokenImport.map(async (item, index) => {
-                // let sym = await getSymbolOfTokenImport(infoToken.priKey, item.address);
-                // let balance = await getBalanceOfTokenImport(
-                //     infoToken.priKey,
-                //     value,
-                //     item.address
-                // );
-                dataItem = [
-                    ...dataItem,
-                    {
-                        pubKey: value,
-                        priKey: infoToken.priKey,
-                        key: index,
-                        name: item.nameToken,
-                        address: item.address,
-                        balance: item.balance,
-                    },
-                ];
-                // console.log(dataItem, "dataToken");
+        if (infoData) {
+            infoData.listAcc.map(async (value) => {
+                let infoToken = await JSON.parse(localStorage.getItem(value));
+                let dataItem = [];
+                infoToken.tokenImport.map(async (item, index) => {
+                    // let sym = await getSymbolOfTokenImport(infoToken.priKey, item.address);
+                    // let balance = await getBalanceOfTokenImport(
+                    //     infoToken.priKey,
+                    //     value,
+                    //     item.address
+                    // );
+                    dataItem = [
+                        ...dataItem,
+                        {
+                            pubKey: value,
+                            priKey: infoToken.priKey,
+                            key: index,
+                            name: item.nameToken,
+                            address: item.address,
+                            balance: item.balance,
+                        },
+                    ];
+                    // console.log(dataItem, "dataToken");
+                });
+                let t = dataToken;
+                t.push(dataItem);
+                setDataToken(t);
             });
-            let t = dataToken;
-            t.push(dataItem);
-            setDataToken(t);
-        });
-        console.log(dataToken, "dataToken");
+            console.log(dataToken, "dataToken");
+        }
     }, []);
 
     const expandedRow = (row) => {
