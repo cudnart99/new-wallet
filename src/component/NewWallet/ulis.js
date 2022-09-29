@@ -5,6 +5,7 @@ const bscProvider = new ethers.providers.JsonRpcProvider(rpc, {
   name: "bnbt",
   chainId: 97,
 });
+const abi = require("../NewWallet/abi/abi");
 
 async function getBalance(privateKey) {
   let wallet = new ethers.Wallet(privateKey);
@@ -30,7 +31,27 @@ async function transfer(privateKey, sender, receiver, amount) {
   }
 }
 
+async function getSymbolOfTokenImport(privateKey, addressToken) {
+  let wallet = new ethers.Wallet(privateKey);
+  let walletSigner = wallet.connect(bscProvider);
+
+  const smc = new ethers.Contract(addressToken, abi, walletSigner);
+  const symbol = await smc.symbol();
+  return symbol;
+}
+
+async function getBalanceOfTokenImport(privateKey, addressUser, addressToken) {
+  let wallet = new ethers.Wallet(privateKey);
+  let walletSigner = wallet.connect(bscProvider);
+
+  const smc = new ethers.Contract(addressToken, abi, walletSigner);
+  const balance = await smc.balanceOf(addressUser);
+  return balance;
+}
+
 module.exports = {
   getBalance,
   transfer,
+  getSymbolOfTokenImport,
+  getBalanceOfTokenImport
 };
